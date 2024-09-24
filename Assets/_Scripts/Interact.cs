@@ -1,22 +1,52 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Interact : MonoBehaviour
 {
     private Marble selectedMarble;
     private Camera mainCamera;
     [SerializeField] private Material mat0;
+
+    private InputControls input;
+    
+    void Awake()
+    {
+        input = new InputControls();
+    }
+
+    private void OnEnable()
+    {
+        input.Enable();
+    }
+
+    private void OnDisable()
+    {
+        input.Disable();
+    }
+
     void Start()
     {
         mainCamera = Camera.main;
+        input.Interacting.Press.started += ctx => StartPress(ctx);
+        input.Interacting.Press.canceled += ctx => EndPress(ctx);
+    }
+
+    private void StartPress(InputAction.CallbackContext ctx)
+    {
+        Debug.Log("start press");
+    }
+
+    private void EndPress(InputAction.CallbackContext ctx)
+    {
+        Debug.Log("end press");
     }
 
     void Update()
     {
-        HandleInput();
+        //HandleInput();
     }
 
+    /*
     private void HandleInput()
     {
         if (Input.GetMouseButtonDown(0))
@@ -29,7 +59,7 @@ public class Interact : MonoBehaviour
             MoveMarble();
         }
         
-        //how to change the color of a material. Use in meny where players can choose colors.
+        //how to change the color of a material. To be used in menu where players can choose colors.
         if (Input.GetMouseButtonDown(1))
         {
             mat0.color = new Color(1,0,1);
@@ -59,4 +89,5 @@ public class Interact : MonoBehaviour
             selectedMarble.MoveMarble(wordlMousePos);
         }
     }
+    */
 }
