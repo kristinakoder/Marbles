@@ -34,7 +34,7 @@ public class Spawner : MonoBehaviour
 		{
 			int numberOfEachColor = NumberOfMarbles / NumberOfColors;
 			if (i % numberOfEachColor == 0) n++; //TODO: this divides unevenly. Say 5 colors and 9 mables. 4 of them will be the last color.
-            Vector3 spawnPosition = new(Random.Range(0f, 5f), 5, Random.Range(0f, 5f));
+            Vector3 spawnPosition = new(Random.Range(-5f, 5f), 5, Random.Range(-10f, 10f));
             SetMaterial(marble, n);
             Instantiate(marble, spawnPosition, Quaternion.identity);
 		}

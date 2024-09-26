@@ -13,7 +13,7 @@ public class Interact : MonoBehaviour
     {
         get
         {
-            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            Ray ray = mainCamera.ScreenPointToRay(screenPos);
             Plane plane = new(Vector3.up, Vector3.zero);
             plane.Raycast(ray, out float distance);
             return ray.GetPoint(distance - 5);

@@ -15,7 +15,7 @@ public class Marble : MonoBehaviour
     {
         if (transform.position.y < 0) 
 		{
-			transform.position = new(0,5,0);
+			transform.position = new(Random.Range(-5f, 5f), 5, Random.Range(-10f, 10f));
 		}
     }
 
