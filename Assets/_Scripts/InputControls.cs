@@ -44,6 +44,15 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Shake"",
+                    ""type"": ""Value"",
+                    ""id"": ""8c71dc37-440e-49e9-875c-a2a509602004"",
+                    ""expectedControlType"": ""Vector3"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -90,6 +99,28 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""action"": ""Position"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a21e1766-ce5b-4d64-9221-156b91b76f68"",
+                    ""path"": ""<Accelerometer>/acceleration"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shake"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""86f78888-9aab-4e66-be37-e136c7a1e95c"",
+                    ""path"": ""<Gyroscope>/angularVelocity"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shake"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -100,6 +131,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
         m_Interacting = asset.FindActionMap("Interacting", throwIfNotFound: true);
         m_Interacting_Press = m_Interacting.FindAction("Press", throwIfNotFound: true);
         m_Interacting_Position = m_Interacting.FindAction("Position", throwIfNotFound: true);
+        m_Interacting_Shake = m_Interacting.FindAction("Shake", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -163,12 +195,14 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
     private List<IInteractingActions> m_InteractingActionsCallbackInterfaces = new List<IInteractingActions>();
     private readonly InputAction m_Interacting_Press;
     private readonly InputAction m_Interacting_Position;
+    private readonly InputAction m_Interacting_Shake;
     public struct InteractingActions
     {
         private @InputControls m_Wrapper;
         public InteractingActions(@InputControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Press => m_Wrapper.m_Interacting_Press;
         public InputAction @Position => m_Wrapper.m_Interacting_Position;
+        public InputAction @Shake => m_Wrapper.m_Interacting_Shake;
         public InputActionMap Get() { return m_Wrapper.m_Interacting; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -184,6 +218,9 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
             @Position.started += instance.OnPosition;
             @Position.performed += instance.OnPosition;
             @Position.canceled += instance.OnPosition;
+            @Shake.started += instance.OnShake;
+            @Shake.performed += instance.OnShake;
+            @Shake.canceled += instance.OnShake;
         }
 
         private void UnregisterCallbacks(IInteractingActions instance)
@@ -194,6 +231,9 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
             @Position.started -= instance.OnPosition;
             @Position.performed -= instance.OnPosition;
             @Position.canceled -= instance.OnPosition;
+            @Shake.started -= instance.OnShake;
+            @Shake.performed -= instance.OnShake;
+            @Shake.canceled -= instance.OnShake;
         }
 
         public void RemoveCallbacks(IInteractingActions instance)
@@ -215,5 +255,6 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
     {
         void OnPress(InputAction.CallbackContext context);
         void OnPosition(InputAction.CallbackContext context);
+        void OnShake(InputAction.CallbackContext context);
     }
 }

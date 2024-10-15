@@ -1,5 +1,5 @@
 {
-    "name": "TouchControls",
+    "name": "InputControls",
     "maps": [
         {
             "name": "Interacting",
@@ -19,6 +19,15 @@
                     "type": "Value",
                     "id": "3bb84725-61ca-4931-b841-e4dd89a21651",
                     "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Shake",
+                    "type": "Value",
+                    "id": "8c71dc37-440e-49e9-875c-a2a509602004",
+                    "expectedControlType": "Vector3",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -66,6 +75,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Position",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a21e1766-ce5b-4d64-9221-156b91b76f68",
+                    "path": "<Accelerometer>/acceleration",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shake",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "86f78888-9aab-4e66-be37-e136c7a1e95c",
+                    "path": "<Gyroscope>/angularVelocity",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shake",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
