@@ -16,7 +16,7 @@ public class Interact : MonoBehaviour
             Ray ray = mainCamera.ScreenPointToRay(screenPos);
             Plane plane = new(Vector3.up, Vector3.zero);
             plane.Raycast(ray, out float distance);
-            return ray.GetPoint(distance - 5);
+            return ray.GetPoint(distance - 4);
         }
     }
 
@@ -28,6 +28,12 @@ public class Interact : MonoBehaviour
             if(Physics.Raycast(ray, out RaycastHit hit))
             {
                 selectedMarble = hit.collider.GetComponent<Marble>();
+                if(selectedMarble != null) 
+                {
+                    Rigidbody rb = selectedMarble.GetComponent<Rigidbody>();
+                    rb.velocity = Vector3.zero;
+                    rb.angularVelocity = Vector3.zero;
+                }
             }
             return selectedMarble != null;
         }

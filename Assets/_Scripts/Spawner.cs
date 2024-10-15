@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-	[SerializeField] private int NumberOfMarbles = 480;
-	[SerializeField] private int NumberOfColors = 6;
+	[SerializeField] private int numberOfEachColor = 120;
+	[SerializeField] private int numberOfColors = 6;
     [SerializeField] private Material mat0, mat1, mat2, mat3, mat4, mat5;
     [SerializeField] private GameObject marble;
 	[SerializeField] private GameObject tub;
 
     void Start()
     {
-        AddMarbles(NumberOfMarbles);
-		AddTubs(NumberOfColors);
+        AddMarbles();
+		AddTubs(numberOfColors);
     }
 
 	private void AddTubs(int numberOfColors) 
@@ -27,13 +27,13 @@ public class Spawner : MonoBehaviour
 		Instantiate(tub, new Vector3(4.5f, 0, 8.5f), Quaternion.identity);
 	}
     
-	private void AddMarbles(int NumberOfMarbles)
+	private void AddMarbles()
 	{
 		int n = 0;
-		for (int i = 0; i < NumberOfMarbles; i++)
+		int numberOfMarbles = numberOfColors * numberOfEachColor;
+		for (int i = 0; i < numberOfMarbles; i++)
 		{
-			int numberOfEachColor = NumberOfMarbles / NumberOfColors;
-			if (i % numberOfEachColor == 0) n++; //TODO: this divides unevenly. Say 5 colors and 9 mables. 4 of them will be the last color.
+			if (i % numberOfEachColor == 0) n++; //TODO: this divides unevenly. Say 5 colors and 9 mables: 4 of them will be the last color.
             Vector3 spawnPosition = new(Random.Range(-5f, 5f), 5, Random.Range(-10f, 10f));
             SetMaterial(marble, n);
             Instantiate(marble, spawnPosition, Quaternion.identity);
