@@ -7,10 +7,9 @@ public class Interact : MonoBehaviour
 {
     private Marble selectedMarble = null;
     private Camera mainCamera;
-
+    [SerializeField] IntVariable shakeSensitivity;
     private InputControls input;
     private Vector3 screenPos;
-    private bool canReset = false;
 
     private Vector3 WorldPos
     {
@@ -36,7 +35,6 @@ public class Interact : MonoBehaviour
                     Rigidbody rb = selectedMarble.GetComponent<Rigidbody>();
                     rb.velocity = Vector3.zero;
                     rb.angularVelocity = Vector3.zero;
-                    canReset = true;
                 }
             }
             return selectedMarble != null;
@@ -45,12 +43,10 @@ public class Interact : MonoBehaviour
     
     void Awake()
     {
+        shakeSensitivity.i = 50;
         mainCamera = Camera.main;
         input = new InputControls();
-        input.Interacting.Shake.performed += ctx => 
-        { 
-            if (canReset && ctx.ReadValue<Vector3>().magnitude >= 5f) SceneManager.LoadScene("Game");
-        };
+        StartCoroutine(ResetByShake());
         input.Interacting.Position.performed += ctx => { screenPos = ctx.ReadValue<Vector2>(); };
         input.Interacting.Press.performed += _ => 
         { 
@@ -66,6 +62,15 @@ public class Interact : MonoBehaviour
         {
             selectedMarble.MoveMarble(WorldPos);
             yield return null;
+        }
+    }
+
+    private IEnumerator ResetByShake()
+    {
+        while(true)
+        {
+            yield return new WaitForSecondsRealtime(1);
+            if (input.Interacting.Shake.ReadValue<Vector3>().sqrMagnitude >= shakeSensitivity.i) SceneManager.LoadScene("Game");
         }
     }
 
